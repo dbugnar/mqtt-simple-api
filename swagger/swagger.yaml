@@ -1,0 +1,289 @@
+swagger: '2.0'
+
+info:
+  title: MQTT api
+  version: "0.1"
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+schemes:
+- "http"
+
+paths:
+  /broker/info:
+    get:
+      tags: [Broker]
+      summary: Get Broker information
+      operationId: app.broker_info
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/Broker'
+          description: Return json with broker information
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /topics/list:
+    get:
+      tags: [Topics]
+      summary: Get a list of all topisc existent in database
+      operationId: app.topics_list
+      responses:
+        200:
+          description: Return a list of topics
+          schema:
+            type: array
+            items:
+              type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /messages/all:
+    get:
+      tags: [Messages]
+      summary: Get all messages stored in database
+      operationId: app.get_all_messages
+      responses:
+        200:
+          description: Return a list of messages
+          schema:
+            $ref: '#/definitions/Message'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /messages/all:
+    get:
+      tags: [Messages]
+      summary: Get all messages stored in databasen stating from specific time
+      operationId: app.get_all_messages
+      responses:
+        200:
+          description: Return a list of messages
+          schema:
+            $ref: '#/definitions/Message'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /messages/all/{time}:
+    get:
+      tags: [Messages]
+      summary: Get all messages stored in databasen stating from specific time
+      operationId: app.get_all_messages_stating_from
+      parameters:
+        - in: path
+          name: time
+          required: true
+          description: Timestamp
+          type: integer
+      responses:
+        200:
+          description: Return a list of messages
+          schema:
+            $ref: '#/definitions/Message'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /messages/on_topic:
+    get:
+      tags: [Messages]
+      summary: Get all messages stored in database for a specific topic
+      operationId: app.get_topic_messages
+      parameters:
+        - in: query
+          name: topic
+          required: true
+          description: Topic name
+          type: string
+      responses:
+        200:
+          description: Return a list of messages
+          schema:
+            $ref: '#/definitions/Message'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /messages/on_topic/starting_from:
+    get:
+      tags: [Messages]
+      summary: Get all messages stored in database for a specific topic
+      operationId: app.get_topic_messages_starting_from
+      parameters:
+        - in: query
+          name: topic
+          required: true
+          description: Topic name
+          type: string
+        - in: query
+          name: time
+          required: true
+          description: Topic name
+          type: integer
+      responses:
+        200:
+          description: Return a list of messages
+          schema:
+            $ref: '#/definitions/Message'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /topics/remove/{topic}:
+     delete:
+       tags: [Topics]
+       summary: Get a list of all topisc existent in database
+       operationId: app.remove_topic
+       parameters:
+         - in: path
+           name: topic
+           required: true
+           description: Topic name
+           type: string
+       responses:
+         200:
+           description: Return a list of topics
+           schema:
+             type: array
+             items:
+               type: string
+         default:
+           description: Unexpected error
+           schema:
+             $ref: '#/definitions/Error'
+
+definitions:
+  Broker:
+    type: object
+    properties:
+      clients_total:
+        type: string
+      version:
+        type: string
+      timestamp:
+        type: string
+      uptime:
+        type: string
+      clients_inactive:
+        type: string
+      clients_disconnected:
+        type: string
+      clients_active:
+        type: string
+      clients_connected:
+        type: string
+      clients_expired:
+        type: string
+      clients_maximum:
+        type: string
+      messages_stored:
+        type: string
+      messages_receiver:
+        type: string
+      messages_sent:
+        type: string
+      subscriptions_count:
+        type: string
+      retained_messages_count:
+        type: string
+      heap_current:
+        type: string
+      heap_maximumm:
+        type: string
+      publish_messages_dropped:
+        type: string
+      publish_messages_received:
+        type: string
+      publish_messages_sent:
+        type: string
+      publish_bytes_received:
+        type: string
+      publish_bytes_send:
+        type: string
+      bytes_received:
+        type: string
+      bytes_sent:
+        type: string
+      load_messages_received_1min :
+        type: string
+      load_messages_received_5min :
+        type: string
+      load_messages_received_15min:
+        type: string
+      load_messages_sent_1min:
+        type: string
+      load_messages_sent_5min:
+        type: string
+      load_messages_sent_15min:
+        type: string
+      load_publish_received_1min:
+        type: string
+      load_publish_received_5min:
+        type: string
+      load_publish_received_15min:
+        type: string
+      load_publish_sent_1min:
+        type: string
+      load_publish_sent_5min:
+        type: string
+      load_publish_sent_15min:
+        type: string
+      load_bytes_received_1min:
+        type: string
+      load_bytes_received_5min:
+        type: string
+      load_bytes_received_15min:
+        type: string
+      load_bytes_sent_1min:
+        type: string
+      load_bytes_sent_5min:
+        type: string
+      load_bytes_sent_15min:
+        type: string
+      load_sockets_1min:
+        type: string
+      load_sockets_5min:
+        type: string
+      load_sockets_15min:
+        type: string
+      load_connections_1min:
+        type: string
+      load_connections_5min:
+        type: string
+      load_connections_15min:
+        type: string
+
+  Message:
+    type: object
+    properties:
+      message:
+        type: string
+      topic:
+        type: string
+      qos:
+        type: integer
+      time:
+        type: integer
+
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+      fields:
+        type: string

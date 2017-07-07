@@ -1,0 +1,9 @@
+connexion==1.1.9
+swagger-spec-validator==2.0.4
+gevent>=1.1b1
+pyopenssl
+flask-cors
+pytz
+bcrypt
+Flask-HTTPAuth
+pymongo
