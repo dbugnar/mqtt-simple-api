@@ -37,9 +37,12 @@ def db_remove_topic(topic):
     topics = document['topics']
     try:
         topics.remove(topic)
+        collection.update(id_var, {'topics': topics})
     except ValueError:
         return None
-    collection.update(id_var, {'topics': topics})
+    except Exception:
+        return None
+
     return topics
 
 
@@ -91,5 +94,7 @@ def get_messages_from_topic_stating_from_time(topic, time):
                 msg = Message(topic, x['message'], x['qos'], x['time'])
                 messages.append(json.loads(msg.to_json()))
     except ValueError:
+        return []
+    except Exception:
         return []
     return messages

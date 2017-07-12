@@ -26,10 +26,10 @@ def topics_list():
 def remove_topic(topic):
     rt = db_remove_topic(topic)
     if rt ==  None:
-        resp = {'status': 'Failed to remove topic list.'}
+        resp = {'message': 'Failed to remove topic list.', 'fields': 'Remove Topic'}
         return Response(json.dumps(resp), status=400, mimetype='application/json')
     resp = {'status': 'Topic removed successfully'}
-    return Response(json.dumps(resp), status=400, mimetype='application/json')
+    return Response(json.dumps(resp), status=200, mimetype='application/json')
 
 
 def get_all_messages():
